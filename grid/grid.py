@@ -1,7 +1,10 @@
 from grid.tile import Bloco
 from config.config import (
-    TIPO_BLOCO_SOLO, TIPO_BLOCO_PAREDE,
-    TIPO_BLOCO_AGUA, TIPO_BLOCO_BURACO
+    TIPO_BLOCO_SOLO,
+    TIPO_BLOCO_ACUDE,
+    TIPO_BLOCO_POCO,
+    TIPO_BLOCO_CACIMBA,
+    TIPO_BLOCO_DISPUTA,
 )
 
 
@@ -12,18 +15,23 @@ class Grade:
         self.altura = altura
         self.blocos = []
 
+        layout = [
+            [TIPO_BLOCO_SOLO, TIPO_BLOCO_SOLO, TIPO_BLOCO_SOLO, TIPO_BLOCO_DISPUTA, TIPO_BLOCO_DISPUTA, TIPO_BLOCO_SOLO, TIPO_BLOCO_SOLO, TIPO_BLOCO_SOLO],
+            [TIPO_BLOCO_SOLO, TIPO_BLOCO_SOLO, TIPO_BLOCO_SOLO, TIPO_BLOCO_DISPUTA, TIPO_BLOCO_DISPUTA, TIPO_BLOCO_SOLO, TIPO_BLOCO_SOLO, TIPO_BLOCO_SOLO],
+            [TIPO_BLOCO_SOLO, TIPO_BLOCO_POCO, TIPO_BLOCO_SOLO, TIPO_BLOCO_SOLO, TIPO_BLOCO_SOLO, TIPO_BLOCO_SOLO, TIPO_BLOCO_CACIMBA, TIPO_BLOCO_SOLO],
+            [TIPO_BLOCO_SOLO, TIPO_BLOCO_POCO, TIPO_BLOCO_SOLO, TIPO_BLOCO_SOLO, TIPO_BLOCO_SOLO, TIPO_BLOCO_SOLO, TIPO_BLOCO_CACIMBA, TIPO_BLOCO_SOLO],
+            [TIPO_BLOCO_SOLO, TIPO_BLOCO_SOLO, TIPO_BLOCO_SOLO, TIPO_BLOCO_ACUDE, TIPO_BLOCO_ACUDE, TIPO_BLOCO_ACUDE, TIPO_BLOCO_SOLO, TIPO_BLOCO_SOLO],
+            [TIPO_BLOCO_SOLO, TIPO_BLOCO_SOLO, TIPO_BLOCO_SOLO, TIPO_BLOCO_ACUDE, TIPO_BLOCO_ACUDE, TIPO_BLOCO_ACUDE, TIPO_BLOCO_SOLO, TIPO_BLOCO_SOLO],
+            [TIPO_BLOCO_SOLO, TIPO_BLOCO_SOLO, TIPO_BLOCO_SOLO, TIPO_BLOCO_SOLO, TIPO_BLOCO_SOLO, TIPO_BLOCO_SOLO, TIPO_BLOCO_SOLO, TIPO_BLOCO_SOLO],
+            [TIPO_BLOCO_SOLO, TIPO_BLOCO_SOLO, TIPO_BLOCO_SOLO, TIPO_BLOCO_SOLO, TIPO_BLOCO_SOLO, TIPO_BLOCO_SOLO, TIPO_BLOCO_SOLO, TIPO_BLOCO_SOLO],
+        ]
+
         for y in range(altura):
             linha = []
             for x in range(largura):
                 tipo = TIPO_BLOCO_SOLO
-
-                if x == 5 and y < 8:
-                    tipo = TIPO_BLOCO_PAREDE
-                if x == 10 and y > 8:
-                    tipo = TIPO_BLOCO_AGUA
-                if x == 3 and y == 12:
-                    tipo = TIPO_BLOCO_BURACO
-
+                if y < len(layout) and x < len(layout[y]):
+                    tipo = layout[y][x]
                 linha.append(Bloco(x, y, tipo))
 
             self.blocos.append(linha)
