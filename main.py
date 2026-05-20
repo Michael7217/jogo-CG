@@ -5,7 +5,8 @@ from engine.entrada import retorno_teclado
 from engine.opengl import configurar_opengl
 from graficos.renderer import Renderizador3D
 import config.config as config
-from OpenGL.GL import *
+from OpenGL.GL import GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT, glClear, glClearColor
+from graficos.conversoes import bloco_para_mundo
 
 
 def principal():
@@ -20,7 +21,7 @@ def principal():
     janela = glfw.create_window(
         config.LARGURA_TELA,
         config.ALTURA_TELA,
-        "Jogo Tático Grid",
+        "Sertão Tático",
         None,
         None
     )
@@ -49,6 +50,8 @@ def principal():
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
         renderer.desenhar_grade(grade, camera)
+        mx, my, mz = bloco_para_mundo(1, 2)
+        renderer.desenhar_modelo('aldeao', camera, mx, my, mz + 0.0, escala=1.0)
         glfw.swap_buffers(janela)
 
     glfw.terminate()
