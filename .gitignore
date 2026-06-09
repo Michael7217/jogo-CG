@@ -1,7 +1,7 @@
-/__pycache__
-/agents
-/.venv
-/config/__pycache__
-/engine/__pycache__
-/graficos/__pycache__
-/grid/__pycache__
+COMO_JOGAR.md
+IMPLEMENTACAO_COMPLETA.md
+RESUMO_VISUAL.md
+engine/__pycache__
+config/__pycache__
+game/__pycache__
+graficos/__pycache__

@@ -2,7 +2,6 @@ import ctypes
 from pathlib import Path
 
 from PIL import Image
-import pywavefront
 from OpenGL.GL import (
     GL_ARRAY_BUFFER,
     GL_DYNAMIC_DRAW,
@@ -511,3 +510,43 @@ class Renderizador3D:
         
         return textura
 
+
+    def desenhar_unidades(self, gerenciador_unidades, camera):
+        """Desenha todas as unidades no tabuleiro como modelos 3D."""
+        unidades = gerenciador_unidades.obter_todas_unidades()
+        
+        for unidade in unidades:
+            mundo_x, mundo_y, mundo_z = bloco_para_mundo(unidade.tile_x, unidade.tile_y)
+            
+            if unidade.selecionado:
+                triangulos = self._quads_para_triangulos(
+                    mundo_x, mundo_y, mundo_z - 0.05,
+                    TAMANHO_BLOCO * 0.8,
+                    (1.0, 0.9, 0.0, 0.9)
+                )
+                self._atualizar_matrizes(camera)
+                self._enviar_vertices(triangulos, GL_TRIANGLES)
+            
+            escala = 0.9 if (hasattr(unidade, 'ja_agiu') and unidade.ja_agiu) else 1.0
+            self.desenhar_modelo('aldeao', camera, mundo_x, mundo_y, mundo_z + 0.5, escala=escala)
+    
+    def desenhar_tiles_alcancaveis(self, tiles_alcancaveis, grade, camera):
+        """Destaca tiles alcançáveis (Into the Breach style)."""
+        self._atualizar_matrizes(camera)
+        
+        if not tiles_alcancaveis:
+            return
+        
+        triangulos = []
+        for tile_x, tile_y in tiles_alcancaveis:
+            bloco = grade.obter_bloco(tile_x, tile_y)
+            if bloco:
+                mundo_x, mundo_y, mundo_z = bloco_para_mundo(tile_x, tile_y)
+                triangulos.extend(self._quads_para_triangulos(
+                    mundo_x, mundo_y, mundo_z + 0.05,
+                    TAMANHO_BLOCO * 0.95,
+                    (0.3, 0.6, 1.0, 0.3)
+                ))
+        
+        if triangulos:
+            self._enviar_vertices(triangulos, GL_TRIANGLES)
