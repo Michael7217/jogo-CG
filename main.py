@@ -31,7 +31,7 @@ def main():
     janela = glfw.create_window(
         config.LARGURA_TELA,
         config.ALTURA_TELA,
-        "Sertão Tático - Sistema de Posicionamento",
+        "Colapso energético",
         None,
         None
     )

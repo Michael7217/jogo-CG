@@ -10,7 +10,7 @@ TAMANHO_BLOCO = 64
 GRADE_LARGURA = 8
 GRADE_ALTURA = 8
 
-VELOCIDADE_CAMERA = 10
+VELOCIDADE_CAMERA = 5
 ZOOM_PADRAO = 1.0
 
 # =========================================================
